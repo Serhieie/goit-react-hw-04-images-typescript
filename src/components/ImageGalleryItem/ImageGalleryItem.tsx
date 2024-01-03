@@ -1,10 +1,17 @@
 import { Modal } from 'helpers/Modal';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
+interface ImageGalleryItemProps {
+  webformatURL?: string;
+  largeImageURL: string;
+}
+
+export const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
+  webformatURL,
+  largeImageURL,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
 
   //toggle modal function with scroll blocking effect
   const toggleModal = () => {
@@ -13,7 +20,7 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   };
 
   //Imitation of zoom in open modal (Imitation beacuse scale method cutting image)
-  const toggleZoom = evt => {
+  const toggleZoom = (evt: React.MouseEvent<HTMLImageElement>): void => {
     setIsZoomed(!isZoomed);
     const target = evt.currentTarget;
     target.style.transition = 'all 300ms linear';
@@ -29,13 +36,14 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   //block scroll function if modal is open
   //Це не правильно. Як зробити що б скролл був на 100% ширини
   //та висоти фото?
-  const scrollBlock = () => {
+  const scrollBlock = (): void => {
     if (!isModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
     }
   };
+
   return (
     <li className="rounded shadow-lg">
       <img
@@ -60,10 +68,4 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
       )}
     </li>
   );
-};
-
-ImageGalleryItem.propTypes = {
-  id: PropTypes.string,
-  webformatURL: PropTypes.string,
-  largeImageURL: PropTypes.string,
 };

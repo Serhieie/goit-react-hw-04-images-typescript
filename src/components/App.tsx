@@ -13,14 +13,14 @@ import {
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const App = () => {
-  const [page, setPage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [images, setImages] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
-  const [pagination, setPagination] = useState(9);
-  const [heightToMinus, setHeightToMinus] = useState(120);
-  const [error, setError] = useState(null);
+export const App: React.FC = () => {
+  const [page, setPage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [images, setImages] = useState<any[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [pagination, setPagination] = useState<number>(9);
+  const [heightToMinus, setHeightToMinus] = useState<number>(120);
+  const [error, setError] = useState<boolean>(false);
 
   // Just for practice checking window screen size for different fetch
   const handleWindowResize = () => {
@@ -76,19 +76,19 @@ export const App = () => {
   }, [page, scrollBottom]);
 
   // Fetch by value function
-  const fetchImages = async value => {
+  const fetchImages = async (value: string) => {
     setIsLoading(true);
     try {
       setError(false);
       setSearchValue(value);
       setImages([]);
 
-      const fetchedImages = await API.getImgs(value, page, pagination);
+      const fetchedImages = await API.getImgs(value, 1, pagination);
       const { hits: newHits } = fetchedImages;
 
       if (!newHits.length) {
         setIsLoading(false);
-        setPage(null);
+        setPage(0);
         return toastCallEmpty();
       }
 
@@ -119,7 +119,7 @@ export const App = () => {
 
       if (!newHits.length || newHits.length < pagination) {
         setImages(updatedImages);
-        setPage(null);
+        setPage(0);
         toastCallOutOfRange();
       } else {
         setImages(updatedImages);
@@ -146,8 +146,8 @@ export const App = () => {
           <Loader />
         </div>
       ) : (
-        // Show Load more Button
-        page >= 1 && <LoadMoreButton onClick={loadMoreImages} error={error} />
+        page > 0 &&
+        !error && <LoadMoreButton onClick={loadMoreImages} error={error} />
       )}
     </>
   );

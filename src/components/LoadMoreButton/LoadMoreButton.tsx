@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
+import { LoadMoreButtonProps } from './LoadMoreButton.type';
 
-export const LoadMoreButton = ({ onClick, error }) => {
+export const LoadMoreButton: FC<LoadMoreButtonProps> = ({ onClick, error }) => {
   return (
     //if error I decided to hide the button
-    !error && (
+    error ? null : (
       <button
         className="py-2 px-4 rounded bg-blue-600 transition-all duration-300
        text-center block text-white border-0 cursor-pointer  font-extralight text-base
@@ -16,9 +17,4 @@ export const LoadMoreButton = ({ onClick, error }) => {
       </button>
     )
   );
-};
-
-LoadMoreButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  error: PropTypes.bool,
 };

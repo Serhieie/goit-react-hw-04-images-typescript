@@ -1,17 +1,17 @@
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
-import PropTypes from 'prop-types';
+import { ImageGaleryProps } from './ImageGalery.types';
 
-export const ImageGalery = ({ images }) => {
+export const ImageGalery: React.FC<ImageGaleryProps> = ({ images }) => {
   return (
     <div>
-      {/* If images state is empty we are hidding ul and showing h1 title */}
+      {/* If images state is empty we are hiding ul and showing h1 title */}
       <ul
         className={`grid list-none gap-4 sm:gap-1 sm2:gap-2 
         my-0 p-0 mt-4 mb-2 px-4 sm2:px-2 sm:px-1 mx-auto 
         grid-cols-3 sm:grid-cols-1 w-full sm2:grid-cols-2 extraLargeScreen:grid-cols-4 bg-image2 
         ${!images || images.length === 0 ? 'hidden' : ''}`}
       >
-        {/* Making shure that we have images... that we are for shure have it :) */}
+        {/* Making sure that we have images... that we are for sure have it :) */}
         {images &&
           images.length > 0 &&
           images.map(image => (
@@ -39,14 +39,4 @@ export const ImageGalery = ({ images }) => {
       </h1>
     </div>
   );
-};
-
-ImageGalery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string,
-      largeImageURL: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };

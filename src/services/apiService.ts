@@ -1,12 +1,19 @@
 import axios, { AxiosResponse } from 'axios';
 
+
 const API_KEY: string = '39707189-cf35fc273df01ca9fa36884c9';
 axios.defaults.baseURL = 'https://pixabay.com/api';
+
+export interface ImageGalleryItemProps {
+  id:number;
+  webformatURL: string;
+  largeImageURL: string;
+}
 
 interface PixabayResponse {
   total: number;
   totalHits: number;
-  hits: string[] | number[];
+  hits: ImageGalleryItemProps;
 }
 
 export const getImgs = async (

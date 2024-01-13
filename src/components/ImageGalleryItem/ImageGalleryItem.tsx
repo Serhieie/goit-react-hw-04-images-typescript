@@ -1,8 +1,9 @@
 import { Modal } from 'helpers/Modal';
 import { useState } from 'react';
 
-interface ImageGalleryItemProps {
-  webformatURL?: string;
+export interface ImageGalleryItemProps {
+  id:number;
+  webformatURL: string;
   largeImageURL: string;
 }
 

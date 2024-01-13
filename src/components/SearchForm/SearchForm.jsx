@@ -4,19 +4,23 @@ import { warnTostCall, toastCallError } from '../../helpers/toast';
 import { searchSchema } from 'helpers/searchSchema';
 
 export const SearchForm = ({ onSearch }) => {
-  const handleSubmit = async (values, actions) => {
+const handleSubmit = (
+    values: { search: string },
+    formikHelpers: FormikHelpers<{ search: string }>
+  ) => {
     if (!values.search.trim()) {
       return warnTostCall();
     }
+
     try {
-      await onSearch(values.search);
-      actions.setSubmitting(false);
-      actions.resetForm();
+      onSearch(values.search);
+      formikHelpers.setSubmitting(false);
+      formikHelpers.resetForm();
     } catch (error) {
+      console.log(error);
       toastCallError();
     }
   };
-
   return (
     <Formik
       initialValues={{ search: '' }}

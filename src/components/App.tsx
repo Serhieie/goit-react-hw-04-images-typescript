@@ -20,7 +20,51 @@ export const App: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [pagination, setPagination] = useState<number>(9);
   const [heightToMinus, setHeightToMinus] = useState<number>(120);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);  
+
+  useEffect(() => {
+if(searchValue === "")return
+      // "Load More" button for getting more images from API
+  const loadMoreImages = async () => {
+    setIsLoading(true);
+    try {
+      const fetchedImages = await API.getImgs(
+        searchValue,
+        page + 1,
+        pagination
+      );
+      const { hits: newHits } = fetchedImages;
+      const updatedImages = [...images, ...newHits];
+
+      if (!newHits.length || newHits.length < pagination) {
+        setImages(updatedImages);
+        setPage(0);
+        toastCallOutOfRange();
+      } else {
+        setImages(updatedImages);
+        setPage(state => state + 1);
+        succesToastCall();
+      }
+    } catch (error) {
+      setError(true);
+      toastCallEmpty();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  }, [page, searchValue]);
+
+
+  const handleClick = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
+
+  const handleSubmit = value => {
+    setSearchValue(value);
+    setImages([]); 
+    setCurrentPage(1); 
+  };
+
 
   // Just for practice checking window screen size for different fetch
   const handleWindowResize = () => {
@@ -75,68 +119,10 @@ export const App: React.FC = () => {
     scrollBottom();
   }, [page, scrollBottom]);
 
-  // Fetch by value function
-  const fetchImages = async (value: string) => {
-    setIsLoading(true);
-    try {
-      setError(false);
-      setSearchValue(value);
-      setImages([]);
-
-      const fetchedImages = await API.getImgs(value, 1, pagination);
-      const { hits: newHits } = fetchedImages;
-
-      if (!newHits.length) {
-        setIsLoading(false);
-        setPage(0);
-        return toastCallEmpty();
-      }
-
-      succesToastCall();
-      setImages(newHits);
-      setPage(1);
-      setIsLoading(false);
-    } catch (error) {
-      setError(true);
-      setIsLoading(false);
-      toastCallError();
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // "Load More" button for getting more images from API
-  const loadMoreImages = async () => {
-    setIsLoading(true);
-    try {
-      const fetchedImages = await API.getImgs(
-        searchValue,
-        page + 1,
-        pagination
-      );
-      const { hits: newHits } = fetchedImages;
-      const updatedImages = [...images, ...newHits];
-
-      if (!newHits.length || newHits.length < pagination) {
-        setImages(updatedImages);
-        setPage(0);
-        toastCallOutOfRange();
-      } else {
-        setImages(updatedImages);
-        setPage(state => state + 1);
-        succesToastCall();
-      }
-    } catch (error) {
-      setError(true);
-      toastCallEmpty();
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <>
-      <SearchBar onSearch={fetchImages} />
+      <SearchBar onSearch={handleSubmit} />
       <ToastContainer />
       <ImageGalery images={images} />
 
@@ -147,7 +133,7 @@ export const App: React.FC = () => {
         </div>
       ) : (
         page > 0 &&
-        !error && <LoadMoreButton onClick={loadMoreImages} error={error} />
+        !error && <LoadMoreButton onClick={handleClick} error={error} />
       )}
     </>
   );

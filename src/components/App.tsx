@@ -55,11 +55,11 @@ if(searchValue === "")return
   }, [page, searchValue]);
 
 
-  const handleClick = () => {
+  const handleClick = ():void => {
     setCurrentPage(prevPage => prevPage + 1);
   };
 
-  const handleSubmit = value => {
+  const handleSubmit = (value:string):void => {
     setSearchValue(value);
     setImages([]); 
     setCurrentPage(1); 

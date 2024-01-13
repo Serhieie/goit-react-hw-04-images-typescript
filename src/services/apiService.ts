@@ -13,7 +13,7 @@ export interface ImageGalleryItemProps {
 interface PixabayResponse {
   total: number;
   totalHits: number;
-  hits: ImageGalleryItemProps;
+  hits: ImageGalleryItemProps[];
 }
 
 export const getImgs = async (

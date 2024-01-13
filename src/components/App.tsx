@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export const App: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<API.ImageGalleryItemProps[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [pagination, setPagination] = useState<number>(9);
   const [heightToMinus, setHeightToMinus] = useState<number>(120);

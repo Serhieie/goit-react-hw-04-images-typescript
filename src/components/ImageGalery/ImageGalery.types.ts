@@ -1,6 +1,6 @@
 export interface Image {
   id: number;
-  webformatURL?: string;
+  webformatURL: string;
   largeImageURL: string;
 }
 

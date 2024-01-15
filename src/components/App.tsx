@@ -100,7 +100,6 @@ const App: React.FC = () => {
   return (
     <>
       <SearchBar onSearch={handleSubmit} />
-      <SearchBar onSearch={handleSubmit} />
       <ToastContainer />
       <ImageGalery images={images} />
 
@@ -114,7 +113,6 @@ const App: React.FC = () => {
         </div>
       ) : (
         page > 0 &&
-        !error && <LoadMoreButton onClick={handleClick} error={error} />
         !error && <LoadMoreButton onClick={handleClick} error={error} />
       )}
     </>

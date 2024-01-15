@@ -2,7 +2,7 @@ import { Modal } from 'helpers/Modal';
 import { useState } from 'react';
 
 interface ImageGalleryItemProps {
-  webformatURL?: string;
+  webformatURL: string;
   largeImageURL: string;
 }
 

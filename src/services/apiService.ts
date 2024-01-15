@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { GaleryItemProps } from 'components/App.types';
 
 const API_KEY: string = '39707189-cf35fc273df01ca9fa36884c9';
 axios.defaults.baseURL = 'https://pixabay.com/api';
@@ -6,7 +7,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api';
 interface PixabayResponse {
   total: number;
   totalHits: number;
-  hits: string[] | number[];
+  hits: GaleryItemProps[];
 }
 
 export const getImgs = async (

@@ -1,9 +1,10 @@
+import { GaleryItemProps } from 'components/App.types';
 export interface Image {
   id: number;
-  webformatURL?: string;
+  webformatURL: string;
   largeImageURL: string;
 }
 
 export interface ImageGaleryProps {
-  images: Image[];
+  images: GaleryItemProps[];
 }
